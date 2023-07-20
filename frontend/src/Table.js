@@ -12,38 +12,32 @@ const TableHeader = () => {
   );
 };
 
-const TableBody = () => {
-  return (
-    <tbody>
-      <tr>
-        <td>Natacsha</td>
-        <td>nat@mail.com</td>
+const TableBody = (props) => {
+  const rows = props.characterData.map((row, index) => {
+    return (
+      <tr key={index}>
+        <td>{row.name}</td>
+        <td>{row.email}</td>
+        <td>
+          <button onClick={() => props.removeCharacter(index)}>Delete</button>
+        </td>
       </tr>
-      <tr>
-        <td>Felipe</td>
-        <td>felipe@mail.com</td>
-      </tr>
-      <tr>
-        <td>Maite</td>
-        <td>maite@mail.com</td>
-      </tr>
-      <tr>
-        <td>Juliana</td>
-        <td>ju@mail.com</td>
-      </tr>
-    </tbody>
-  );
+    );
+  });
+  return <tbody>{rows}</tbody>;
 };
 
-class Table extends Component {
-  render() {
-    return (
-      <table className="table">
-        <TableHeader />
-        <TableBody />
-      </table>
-    );
-  }
-}
+const Table = (props) => {
+  const { characterData, removeCharacter } = props;
+  return (
+    <table className="table">
+      <TableHeader />
+      <TableBody
+        characterData={characterData}
+        removeCharacter={removeCharacter}
+      />
+    </table>
+  );
+};
 
 export default Table;
