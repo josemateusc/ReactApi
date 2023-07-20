@@ -3,6 +3,7 @@ import Table from "./Table";
 import Menu from "./Menu";
 import Searchbar from "./Searchbar";
 import ProductsCards from "./ProductsCards";
+import Cart from "./Cart";
 
 class App extends Component {
   state = {
@@ -52,6 +53,7 @@ class App extends Component {
         price: "R$1500,00",
       },
     ],
+    cart: [],
   };
 
   removeCharacter = (index) => {
@@ -64,10 +66,23 @@ class App extends Component {
     });
   };
 
+  removeFromCart = (index) => {
+    this.setState((prevState) => ({
+      cart: prevState.cart.filter((_, i) => i !== index),
+    }));
+  };
+
+  addToCart = (product) => {
+    this.setState((prevState) => ({
+      cart: [...prevState.cart, product],
+    }));
+  };
+
   render() {
     const { characters } = this.state;
     const { productsRow1 } = this.state;
     const { productsRow2 } = this.state;
+    const { cart } = this.state;
     return (
       <div className="container">
         <Menu
@@ -83,7 +98,18 @@ class App extends Component {
         <ProductsCards
           productData1={productsRow1}
           productData2={productsRow2}
+          addToCart={this.addToCart}
         />
+        {/* Se o carrinho estiver vazio, exiba uma mensagem de carrinho vazio */}
+        {cart.length === 0 ? (
+          <div>
+            <h3 className="cart-title">Seu Carrinho</h3>
+            <p>Seu Carrinho está Vazio</p>
+          </div>
+        ) : (
+          <Cart cartItems={cart} removeFromCart={this.removeFromCart} />
+        )}
+
         <Table
           characterData={characters}
           removeCharacter={this.removeCharacter}

@@ -33,3 +33,11 @@
     0 0 40px rgb(16, 16, 255);
   cursor: pointer;
 }
+
+.cart-title {
+  margin-top: 50px;
+}
+
+.cartList li {
+  margin-top: 10px;
+}
